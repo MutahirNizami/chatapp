@@ -73,7 +73,8 @@ class _ChatScreenState extends State<ChatScreen> {
     double height = MediaQuery.of(context).size.height;
 
     final currentUserId = FirebaseAuth.instance.currentUser!.uid;
-    final chatId = getChatID(currentUserId, widget.userModel["id"]);
+    // final chatId = getChatID(currentUserId, widget.userModel["id"]);
+    final chatId = getChatID(currentUserId, widget.userModel["creatorId"]);
 
     return SafeArea(
       child: Scaffold(
@@ -101,7 +102,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   SizedBox(width: width * 0.03),
                   Text(
-                    widget.userModel['name'],
+                    // widget.userModel['name'],
+                    widget.userModel['groupName'],
                     style: GoogleFonts.poppins(
                       fontSize: height * 0.025,
                       color: Colors.white,
@@ -229,7 +231,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void _sendMessage(String chatId, {String? imageMessage}) async {
     final text = _controller.text.trim();
 
-    if (text.isNotEmpty || imageMessage != null) {
+    if (text.isNotEmpty) {
       try {
         final senderId = FirebaseAuth.instance.currentUser!.uid;
         await FirebaseFirestore.instance
@@ -240,7 +242,8 @@ class _ChatScreenState extends State<ChatScreen> {
           "message": text.isNotEmpty ? text : '',
           "image": imageMessage ?? '',
           "senderId": senderId,
-          "receiverId": widget.userModel["id"],
+          // "receiverId": widget.userModel["id"],
+          "receiverId": widget.userModel["creatorId"],
           "timeStamp": FieldValue.serverTimestamp(),
         });
 
