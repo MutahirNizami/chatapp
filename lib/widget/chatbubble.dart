@@ -27,8 +27,6 @@ class ChatBubble extends StatelessWidget {
       crossAxisAlignment:
           isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        // if (senderName != null)
-        // Text(isGroupchat?senderName:null),
         Center(
           child: Text(
             time,

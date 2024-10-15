@@ -19,7 +19,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int selectedIndex = 0;
 
   List<Widget> get _pages =>
-      [const Homescreen(), const Profilescreen(), const Groupscreen()];
+      [const Homescreen(), ProfileScreen(), Groupscreen()];
 
   void _onItemTapped(int index) {
     setState(() {

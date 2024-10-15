@@ -1,6 +1,6 @@
-import 'package:chatapp/model/listmodel.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/view/chatscreen.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -119,8 +119,8 @@ class _GroupscreenState extends State<Groupscreen> {
                                     shape: BoxShape.circle,
                                     color: Mycolor().subtitlecolor,
                                   ),
-                                  child: Image.asset(chats[index]
-                                      .imageUrl), // Modify this to fetch an appropriate image for the group
+                                  // child: Image.asset(chats[index]
+                                  //     .imageUrl), // Modify this to fetch an appropriate image for the group
                                 ),
                                 Expanded(
                                   child: Column(
@@ -151,8 +151,7 @@ class _GroupscreenState extends State<Groupscreen> {
                                   ),
                                 ),
                                 Text(
-                                  chats[index]
-                                      .time, // Placeholder for the time, modify if you have timestamp info
+                                  'Time...', // Placeholder for the time, modify if you have timestamp info
                                   style: GoogleFonts.poppins(
                                     fontSize: height * 0.015,
                                     color: Mycolor().subtitlecolor,
