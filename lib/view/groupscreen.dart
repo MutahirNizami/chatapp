@@ -1,5 +1,7 @@
+import 'package:chatapp/router/bottomnavigation.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/view/groupchatscreen.dart';
+import 'package:chatapp/view/homescreen.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,6 +33,19 @@ class _GroupscreenState extends State<Groupscreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DashboardScreen(),
+                          ));
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      size: height * 0.03,
+                      color: Mycolor().titlecolor,
+                    )),
                 Text(
                   "Groups",
                   style: GoogleFonts.poppins(

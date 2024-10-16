@@ -32,8 +32,22 @@ class _HomescreenState extends State<Homescreen> {
             padding: EdgeInsets.symmetric(
                 vertical: height * 0.015, horizontal: width * 0.04),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text(
+                  "Messages",
+                  style: GoogleFonts.poppins(
+                      fontSize: height * 0.04,
+                      fontWeight: FontWeight.w600,
+                      color: Mycolor().titlecolor),
+                ),
+                Spacer(),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.search,
+                      size: height * 0.045,
+                      color: Mycolor().titlecolor,
+                    )),
                 IconButton(
                     iconSize: height * 0.03,
                     onPressed: () => showDialog(
@@ -108,18 +122,6 @@ class _HomescreenState extends State<Homescreen> {
                       Icons.add_circle_outline,
                       color: Mycolor().titlecolor,
                     )),
-                Text(
-                  "Messages",
-                  style: GoogleFonts.poppins(
-                      fontSize: height * 0.04,
-                      fontWeight: FontWeight.w600,
-                      color: Mycolor().titlecolor),
-                ),
-                Icon(
-                  Icons.search,
-                  size: height * 0.045,
-                  color: Mycolor().titlecolor,
-                ),
               ],
             ),
           ),
@@ -132,37 +134,57 @@ class _HomescreenState extends State<Homescreen> {
                     color: Mycolor().titlecolor.withOpacity(0.58))),
           ),
           SizedBox(
-            height: height * 0.16,
+            height: height * 0.14,
             width: width,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: height * 0.04,
-                          child: const Image(
-                            image: AssetImage("assets/images/man.png"),
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .where("id",
+                        isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: width * 0.04),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                radius: height * 0.035,
+                                child: Icon(Icons.person),
+                                backgroundColor: Mycolor().subtitlecolor,
+                                // child: const Image(
+                                //   image: AssetImage("assets/images/man.png"),
+                                // ),
+                              ),
+                              SizedBox(
+                                height: height * 0.007,
+                              ),
+                              Text(
+                                snapshot.data!.docs[index]["name"],
+                                style: GoogleFonts.poppins(
+                                  fontSize: height * 0.02,
+                                  fontWeight: FontWeight.w500,
+                                  color: Mycolor().titlecolor,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(
-                          height: height * 0.007,
-                        ),
-                        Text(
-                          "Men",
-                          style: GoogleFonts.poppins(
-                            fontSize: height * 0.02,
-                            fontWeight: FontWeight.w500,
-                            color: Mycolor().titlecolor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
+                        );
+                      });
                 }),
           ),
           Expanded(
@@ -211,7 +233,7 @@ class _HomescreenState extends State<Homescreen> {
                                 left: width * 0.02),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.max,
+                              // mainAxisSize: MainAxisSize.max,
                               children: [
                                 Container(
                                   height: height * 0.07,

@@ -1,4 +1,7 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:io';
+import 'package:chatapp/router/bottomnavigation.dart';
 import 'package:chatapp/router/wrapper.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/button.dart';
@@ -9,10 +12,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({
+    super.key,
+  });
 
   @override
-  // ignore: library_private_types_in_public_api
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
@@ -20,6 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   String _name = '';
   String _email = '';
+  // ignore: unused_field
   String? _imageUrl;
   File? _imageFile;
   final ImagePicker _picker = ImagePicker();
@@ -37,8 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         _name = user.displayName ?? '';
         _email = user.email ?? '';
-        _imageUrl =
-            null; // You can also retrieve the image URL if stored in Firestore
+        _imageUrl = null;
       });
     }
   }
@@ -95,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           'imageUrl': imageUrl,
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Profile updated successfully')),
+          const SnackBar(content: Text('Profile updated successfully')),
         );
       }
     }
@@ -110,7 +114,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         backgroundColor: Mycolor().backcolor,
         centerTitle: true,
-        title: Text('Profile'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DashboardScreen(),
+                  ));
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: height * 0.03,
+              color: Mycolor().titlecolor,
+            )),
+        title: Text(
+          'Profile',
+          style: TextStyle(fontSize: height * 0.03),
+        ),
         titleTextStyle: TextStyle(color: Mycolor().titlecolor),
       ),
       body: Padding(
@@ -123,14 +143,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               GestureDetector(
                 onTap: _pickImage,
                 child: CircleAvatar(
-                  radius: 50,
+                  radius: height * 0.07,
                   backgroundImage:
                       _imageFile != null ? FileImage(_imageFile!) : null,
-                  child:
-                      _imageFile == null ? Icon(Icons.person, size: 50) : null,
+                  child: _imageFile == null
+                      ? Icon(Icons.person, size: height * 0.1)
+                      : null,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 initialValue: _name,
                 decoration: InputDecoration(
@@ -171,9 +192,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
                 style: TextStyle(color: Mycolor().titlecolor),
               ),
-              ElevatedButton(
-                onPressed: _updateUserProfile,
-                child: Text('Update Profile'),
+              Appbutton(
+                ontap: _updateUserProfile,
+                text: 'Update',
+                btncolor: Mycolor().btncolor,
+                btnwidth: width * 0.4,
+                borderradius: height * 0.03,
+                textcolor: Mycolor().titlecolor,
               ),
               Padding(
                 padding: EdgeInsets.only(top: height * 0.05, left: width * 0.7),
@@ -182,6 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   text: 'Logout',
                   btncolor: Mycolor().btncolor,
                   btnwidth: width * 0.2,
+                  borderradius: height * 0.03,
                   textcolor: Mycolor().titlecolor,
                 ),
               ),
@@ -197,7 +223,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Wrapper(),
+          builder: (context) => const Wrapper(),
         ));
   }
 }

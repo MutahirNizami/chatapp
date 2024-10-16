@@ -36,12 +36,6 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
     super.dispose();
   }
 
-  String getChatID(String senderID, String receiverID) {
-    return senderID.hashCode <= receiverID.hashCode
-        ? '$senderID\_$receiverID'
-        : '$receiverID\_$senderID';
-  }
-
   Future<void> pickMedia(String chatId) async {
     final XFile? pickedFile =
         await _picker.pickImage(source: ImageSource.gallery);
@@ -75,7 +69,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
     double height = MediaQuery.of(context).size.height;
 
     final currentUserId = FirebaseAuth.instance.currentUser!.uid;
-    // final chatId = getChatID(currentUserId, widget.groupModel["groupName"]);
+
     final chatId = widget.groupModel["groupName"];
     print("chat is is ${chatId}");
 
@@ -143,7 +137,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                     }
                     // list of messages get from firebase............
                     final messagesList = snapshot.data!.docs;
-
+                    // final Sendername = widget.userModel;
                     return ListView.builder(
                       reverse: true,
                       itemCount: messagesList.length,
@@ -152,7 +146,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                         print(message.data());
                         final isSentByMe = message["senderId"] == currentUserId;
                         return ChatBubble(
-                          // senderName: widget.userModel["name "],
+                          // senderName: Sendername,
                           time: _formatTimestamp(message["timeStamp"]),
                           isSentByMe: isSentByMe,
                           message: message['message'],
@@ -163,6 +157,69 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                   },
                 ),
               ),
+              // Expanded(
+              //   child: StreamBuilder<QuerySnapshot>(
+              //     stream: FirebaseFirestore.instance
+              //         .collection('groupchat')
+              //         .doc(chatId)
+              //         .collection("messages")
+              //         .orderBy("timeStamp", descending: true)
+              //         .snapshots(),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.hasError) {
+              //         return Center(
+              //           child: Text('Error: ${snapshot.error}'),
+              //         );
+              //       }
+
+              //       if (!snapshot.hasData) {
+              //         return const Center(
+              //           child: CircularProgressIndicator(),
+              //         );
+              //       }
+
+              //       final messagesList = snapshot.data!.docs;
+
+              //       return ListView.builder(
+              //         reverse: true,
+              //         itemCount: messagesList.length,
+              //         itemBuilder: (BuildContext context, int index) {
+              //           final message = messagesList[index];
+              //           final isSentByMe = message["senderId"] == currentUserId;
+
+              //           return Column(
+              //             crossAxisAlignment: isSentByMe
+              //                 ? CrossAxisAlignment.end
+              //                 : CrossAxisAlignment.start,
+              //             children: [
+              //               // Display sender name for other users (not for self)
+              //               if (!isSentByMe)
+              //                 Padding(
+              //                   padding:
+              //                       EdgeInsets.only(left: 8.0, bottom: 4.0),
+              //                   child: Text(
+              //                     message['senderName'] ?? 'Unknown',
+              //                     style: TextStyle(
+              //                       color: Colors.white,
+              //                       fontSize: 14,
+              //                       fontWeight: FontWeight.bold,
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ChatBubble(
+              //                 time: _formatTimestamp(message["timeStamp"]),
+              //                 senderName: widget.userModel![index]["name "],
+              //                 isSentByMe: isSentByMe,
+              //                 message: message['message'],
+              //                 imageurl: message['image'],
+              //               ),
+              //             ],
+              //           );
+              //         },
+              //       );
+              //     },
+              //   ),
+              // ),
 
               // Text Input Area
 
@@ -237,6 +294,12 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
     if (text.isNotEmpty || imageMessage != null) {
       try {
         final senderId = FirebaseAuth.instance.currentUser!.uid;
+        // final senderDoc = await FirebaseFirestore.instance
+        //     .collection('users')
+        //     .doc(senderId)
+        //     .get();
+
+        // String senderName = senderDoc['name'] ?? 'Unknown';
         await FirebaseFirestore.instance
             .collection("groupchat")
             .doc(chatId)
@@ -245,6 +308,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
           "message": text.isNotEmpty ? text : '',
           "image": imageMessage ?? '',
           "senderId": senderId,
+          // "senderName": senderName,
           "timeStamp": FieldValue.serverTimestamp(),
         });
 
