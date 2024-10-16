@@ -12,10 +12,12 @@ import 'package:intl/intl.dart';
 
 class Goupchatscreen extends StatefulWidget {
   final QueryDocumentSnapshot<Object?> groupModel;
+  final QueryDocumentSnapshot<Object?>? userModel;
 
   const Goupchatscreen({
     super.key,
     required this.groupModel,
+    this.userModel,
   });
 
   @override
@@ -150,6 +152,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                         print(message.data());
                         final isSentByMe = message["senderId"] == currentUserId;
                         return ChatBubble(
+                          // senderName: widget.userModel["name "],
                           time: _formatTimestamp(message["timeStamp"]),
                           isSentByMe: isSentByMe,
                           message: message['message'],
@@ -266,43 +269,4 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
       }
     }
   }
-  // void _sendMessage(String chatId, {String? imageMessage}) async {
-  //   final text = _controller.text.trim();
-
-  //   if (text.isNotEmpty || imageMessage != null) {
-  //     // Ensure either text or image is sent
-  //     try {
-  //       final senderId = FirebaseAuth.instance.currentUser!.uid;
-  //       await FirebaseFirestore.instance
-  //           .collection("groupchat")
-  //           .doc(chatId)
-  //           .collection("messages")
-  //           .add({
-  //         "message": text.isNotEmpty ? text : '', // Send text if available
-  //         "image": imageMessage ?? '', // Send image URL if available
-  //         "senderId": senderId,
-  //         "timeStamp": FieldValue.serverTimestamp(),
-  //       });
-
-  //       _controller.clear();
-  //       log("Message sent");
-  //     } catch (e) {
-  //       showDialog(
-  //         context: context,
-  //         builder: (BuildContext context) {
-  //           return AlertDialog(
-  //             title: const Text('Error'),
-  //             content: const Text('Failed to send message. Please try again.'),
-  //             actions: [
-  //               TextButton(
-  //                 onPressed: () => Navigator.pop(context),
-  //                 child: const Text('OK'),
-  //               ),
-  //             ],
-  //           );
-  //         },
-  //       );
-  //     }
-  //   }
-  // }
 }

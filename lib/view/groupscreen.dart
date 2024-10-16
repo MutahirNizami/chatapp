@@ -118,8 +118,9 @@ class _GroupscreenState extends State<Groupscreen> {
                                     shape: BoxShape.circle,
                                     color: Mycolor().subtitlecolor,
                                   ),
+                                  child: Icon(Icons.person),
                                   // child: Image.asset(chats[index]
-                                  //     .imageUrl), // Modify this to fetch an appropriate image for the group
+                                  //     .imageUrl),
                                 ),
                                 Expanded(
                                   child: Column(

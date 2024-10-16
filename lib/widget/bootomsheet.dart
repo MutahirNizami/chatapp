@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chatapp/router/bottomnavigation.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,71 +17,99 @@ class CreateGroupBottomSheet extends StatefulWidget {
 
 class _CreateGroupBottomSheetState extends State<CreateGroupBottomSheet> {
   List<String> selectedUserIds = [];
-  TextEditingController groupNameController = TextEditingController();
+  TextEditingController _groupNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom, top: 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                controller: groupNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Group Name',
-                  border: OutlineInputBorder(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Mycolor().backcolor,
+        body: Padding(
+          padding: EdgeInsets.only(bottom: height * 0.04, top: height * 0.05),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding:
+                    EdgeInsets.only(top: height * 0.02, right: width * 0.06),
+                child: TextFormField(
+                  controller: _groupNameController,
+                  decoration: InputDecoration(
+                    fillColor: Mycolor().nonfcontainercolor,
+                    filled: true,
+                    hintText: 'Group Name',
+                    hintStyle: TextStyle(color: Mycolor().subtitlecolor),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(height * 0.02)),
+                  ),
+                  style: TextStyle(color: Mycolor().titlecolor),
                 ),
               ),
-            ),
-            Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('users').snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  final users = snapshot.data!.docs;
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: users.length,
-                    itemBuilder: (context, index) {
-                      var user = users[index];
-                      return CheckboxListTile(
-                        title: Text(user['name']),
-                        value: selectedUserIds.contains(user.id),
-                        onChanged: (isSelected) {
-                          setState(() {
-                            if (isSelected!) {
-                              selectedUserIds.add(user.id);
-                            } else {
-                              log("add user into group");
-                            }
-                          });
-                        },
-                      );
-                    },
-                  );
-                },
+              Expanded(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('users')
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    final users = snapshot.data!.docs;
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: users.length,
+                      itemBuilder: (context, index) {
+                        var user = users[index];
+                        return CheckboxListTile(
+                          checkColor: Mycolor().titlecolor,
+                          activeColor: Mycolor().btncolor,
+                          title: Text(
+                            user['name'],
+                            style: TextStyle(color: Mycolor().titlecolor),
+                          ),
+                          value: selectedUserIds.contains(user.id),
+                          onChanged: (isSelected) {
+                            setState(() {
+                              if (isSelected!) {
+                                selectedUserIds.add(user.id);
+                              } else {
+                                log("add user into group");
+                              }
+                            });
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-            Appbutton(
-              ontap: _createGroup,
-              text: "Create Group",
-              fontSize: height * 0.02,
-              btncolor: Mycolor().btncolor,
-              btnheight: height * 0.05,
-              btnwidth: width * 0.5,
-              borderradius: height * 0.2,
-            ),
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Appbutton(
+                    ontap: _cancle,
+                    text: "cancle",
+                    btnwidth: width * 0.3,
+                    fontSize: height * 0.02,
+                    borderradius: height * 0.2,
+                    btncolor: Mycolor().nonfcontainercolor,
+                  ),
+                  Appbutton(
+                    ontap: _createGroup,
+                    text: "Create Group",
+                    fontSize: height * 0.018,
+                    btncolor: Mycolor().btncolor,
+                    btnheight: height * 0.05,
+                    btnwidth: width * 0.3,
+                    borderradius: height * 0.2,
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -88,7 +117,7 @@ class _CreateGroupBottomSheetState extends State<CreateGroupBottomSheet> {
 
   // Function to create a group in Firestore
   Future<void> _createGroup() async {
-    if (groupNameController.text.isEmpty || selectedUserIds.isEmpty) {
+    if (_groupNameController.text.isEmpty || selectedUserIds.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('Please enter a group name and select users.')),
@@ -98,7 +127,7 @@ class _CreateGroupBottomSheetState extends State<CreateGroupBottomSheet> {
 
     try {
       await FirebaseFirestore.instance.collection('groups').add({
-        'groupName': groupNameController.text,
+        'groupName': _groupNameController.text,
         'memberIds': selectedUserIds,
         'creatorId': FirebaseAuth.instance.currentUser!.uid,
         'createdAt': FieldValue.serverTimestamp(),
@@ -113,5 +142,13 @@ class _CreateGroupBottomSheetState extends State<CreateGroupBottomSheet> {
             content: Text('Failed to create group. Please try again.')),
       );
     }
+  }
+
+  _cancle() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DashboardScreen(),
+        ));
   }
 }

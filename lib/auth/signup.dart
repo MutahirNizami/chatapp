@@ -50,17 +50,15 @@ class _signupScreenState extends State<signupScreen> {
           'name': name,
           'email': email,
         });
-
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Account created successfully!')),
-        );
-
+//navigat to dashboard ...............................
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const DashboardScreen(),
+              builder: (context) => DashboardScreen(),
             ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Account created successfully!')),
+        );
       } on FirebaseAuthException catch (e) {
         log("firebase is not working $e");
       } finally {
@@ -194,7 +192,7 @@ class _signupScreenState extends State<signupScreen> {
                   padding: EdgeInsets.symmetric(vertical: height * 0.03),
                   child: Appbutton(
                     ontap: _signup,
-                    text: "Signup",
+                    text: _isLoading ? "loading.." : "Signup",
                     fontWeight: FontWeight.w600,
                     fontSize: height * 0.022,
                     btncolor: Mycolor().btncolor,

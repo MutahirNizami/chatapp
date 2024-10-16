@@ -53,12 +53,20 @@ class _HomescreenState extends State<Homescreen> {
                                                   const signupScreen(),
                                             ));
                                       },
-                                      child: const Row(
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text("Create a new user"),
-                                          Icon(Icons.add_circle_outline)
+                                          Text(
+                                            "Create a new user",
+                                            style: TextStyle(
+                                                color:
+                                                    Mycolor().fcontainercolor),
+                                          ),
+                                          Icon(
+                                            Icons.add_circle_outline,
+                                            color: Mycolor().fcontainercolor,
+                                          )
                                         ],
                                       )),
                                   TextButton(
@@ -73,7 +81,10 @@ class _HomescreenState extends State<Homescreen> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Text("Create a group"),
+                                            Text("Create a group",
+                                                style: TextStyle(
+                                                    color: Mycolor()
+                                                        .fcontainercolor)),
                                             Icon(
                                               Icons.add_circle_outline,
                                               color: Mycolor().fcontainercolor,
@@ -215,7 +226,7 @@ class _HomescreenState extends State<Homescreen> {
                                     shape: BoxShape.circle,
                                     color: Mycolor().subtitlecolor,
                                   ),
-                                  child: Image.asset(chats[index].imageUrl),
+                                  child: Icon(Icons.person),
                                 ),
                                 Expanded(
                                   child: Column(
@@ -233,7 +244,7 @@ class _HomescreenState extends State<Homescreen> {
                                       ),
                                       SizedBox(height: height * 0.005),
                                       Text(
-                                        chats[index].message,
+                                        "last message............",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.poppins(
@@ -246,7 +257,8 @@ class _HomescreenState extends State<Homescreen> {
                                   ),
                                 ),
                                 Text(
-                                  chats[index].time,
+                                  // chats[index].time,
+                                  "time....",
                                   style: GoogleFonts.poppins(
                                     fontSize: height * 0.015,
                                     color: Mycolor().subtitlecolor,

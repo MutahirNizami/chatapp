@@ -27,6 +27,7 @@ class ChatBubble extends StatelessWidget {
       crossAxisAlignment:
           isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
+        // Timestamp
         Center(
           child: Text(
             time,
@@ -36,9 +37,10 @@ class ChatBubble extends StatelessWidget {
             ),
           ),
         ),
+        // Message Container
         ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: width * 0.7,
+            maxWidth: width * 0.7, // Set max width for chat bubble
           ),
           child: Container(
             margin: EdgeInsets.symmetric(vertical: height * 0.015),
@@ -55,16 +57,31 @@ class ChatBubble extends StatelessWidget {
                   ? CrossAxisAlignment.end
                   : CrossAxisAlignment.start,
               children: [
+                // Display image if available............
                 if (imageurl != null && imageurl!.isNotEmpty)
-                  Image.network(
-                    imageurl!,
-                    fit: BoxFit.cover,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Image.network(
+                      imageurl!,
+                      fit: BoxFit.cover,
+                      // height: height * 0.3,
+                      width: width * 0.7,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Text("Error loading image");
+                      },
+                    ),
                   ),
-                Text(
-                  message,
-                  style: GoogleFonts.poppins(
-                      color: Mycolor().titlecolor, fontSize: height * 0.017),
-                ),
+                // Display message if available.............
+                if (message.isNotEmpty)
+                  Text(
+                    message,
+                    style: GoogleFonts.poppins(
+                        color: Mycolor().titlecolor, fontSize: height * 0.017),
+                  ),
               ],
             ),
           ),

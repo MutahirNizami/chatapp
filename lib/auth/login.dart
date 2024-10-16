@@ -2,9 +2,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:chatapp/auth/Signup.dart';
 import 'package:chatapp/router/bottomnavigation.dart';
-
-
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chatapp/utilites/colors.dart';
@@ -156,39 +153,40 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: height * 0.04),
-                SizedBox(
-                  width: width,
-                  height: height * 0.07,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Mycolor().btncolor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(height * 0.02),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: height * 0.02),
+                  child: SizedBox(
+                    width: width,
+                    height: height * 0.07,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Mycolor().btncolor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(height * 0.02),
+                        ),
                       ),
-                    ),
-                    onPressed: _isLoading
-                        ? null
-                        : () {
-                            if (_formKey.currentState!.validate()) {
-                              _loginWithEmailAndPassword();
-                            }
-                          },
-                    child: _isLoading
-                        ? CircularProgressIndicator(
-                            color: Mycolor().titlecolor,
-                          )
-                        : Text(
-                            "Login",
-                            style: GoogleFonts.poppins(
-                              fontSize: height * 0.022,
-                              fontWeight: FontWeight.w600,
+                      onPressed: _isLoading
+                          ? null
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                _loginWithEmailAndPassword();
+                              }
+                            },
+                      child: _isLoading
+                          ? CircularProgressIndicator(
                               color: Mycolor().titlecolor,
+                            )
+                          : Text(
+                              "Login",
+                              style: GoogleFonts.poppins(
+                                fontSize: height * 0.022,
+                                fontWeight: FontWeight.w600,
+                                color: Mycolor().titlecolor,
+                              ),
                             ),
-                          ),
+                    ),
                   ),
                 ),
-                SizedBox(height: height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
