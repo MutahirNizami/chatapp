@@ -1,5 +1,5 @@
 import 'package:chatapp/utilites/colors.dart';
-import 'package:chatapp/view/chatscreen.dart';
+import 'package:chatapp/view/groupchatscreen.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,8 +60,7 @@ class _GroupscreenState extends State<Groupscreen> {
                   stream: FirebaseFirestore.instance
                       .collection('groups')
                       .where("memberIds",
-                          arrayContains: FirebaseAuth.instance.currentUser!
-                              .uid) // Query groups where the current user is a member
+                          arrayContains: FirebaseAuth.instance.currentUser!.uid)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
@@ -91,8 +90,8 @@ class _GroupscreenState extends State<Groupscreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ChatScreen(
-                                    userModel: snapshot.data!.docs[index],
+                                  builder: (context) => Goupchatscreen(
+                                    groupModel: snapshot.data!.docs[index],
                                   ),
                                 ));
                           },

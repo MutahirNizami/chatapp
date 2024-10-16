@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:chatapp/router/wrapper.dart';
 import 'package:chatapp/utilites/colors.dart';
+import 'package:chatapp/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -101,6 +103,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Mycolor().backcolor,
       appBar: AppBar(
@@ -171,15 +175,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onPressed: _updateUserProfile,
                 child: Text('Update Profile'),
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _updateUserProfile,
-                child: Text('Logout'),
+              Padding(
+                padding: EdgeInsets.only(top: height * 0.05, left: width * 0.7),
+                child: Appbutton(
+                  ontap: _signout,
+                  text: 'Logout',
+                  btncolor: Mycolor().btncolor,
+                  btnwidth: width * 0.2,
+                  textcolor: Mycolor().titlecolor,
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  _signout() {
+    FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Wrapper(),
+        ));
   }
 }

@@ -18,8 +18,11 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int selectedIndex = 0;
 
-  List<Widget> get _pages =>
-      [const Homescreen(), ProfileScreen(), Groupscreen()];
+  List<Widget> get _pages => [
+        const Homescreen(),
+        Groupscreen(),
+        ProfileScreen(),
+      ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -45,19 +48,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           BottomNavigationBarItem(
             icon: selectedIndex == 1
-                ? const Icon(Icons.chat)
-                : const Icon(Icons.chat_outlined),
-            label: 'Chat',
-          ),
-          BottomNavigationBarItem(
-            icon: selectedIndex == 2
                 ? const Icon(Icons.group)
                 : const Icon(Icons.group_outlined),
             label: 'Groups',
           ),
+          BottomNavigationBarItem(
+            icon: selectedIndex == 2
+                ? const Icon(Icons.person)
+                : const Icon(Icons.person_2_outlined),
+            label: 'Profile',
+          ),
         ],
         currentIndex: selectedIndex,
-        selectedItemColor: Mycolor().fcontainercolor,
+        selectedItemColor: Mycolor().btncolor,
         unselectedItemColor: Mycolor().titlecolor,
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,

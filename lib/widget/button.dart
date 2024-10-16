@@ -14,6 +14,7 @@ class Appbutton extends StatelessWidget {
   final Color? btncolor;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final Icon? icon;
 
   const Appbutton(
       {super.key,
@@ -27,7 +28,8 @@ class Appbutton extends StatelessWidget {
       this.btncolor,
       this.fontSize,
       this.fontWeight,
-      this.borderSide});
+      this.borderSide,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
