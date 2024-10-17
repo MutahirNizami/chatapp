@@ -51,17 +51,20 @@ class _signupScreenState extends State<signupScreen> {
           'email': email,
         });
 //navigat to dashboard ...............................
-        Navigator.push(
-            // ignore: use_build_context_synchronously
-            context,
-            MaterialPageRoute(
-              builder: (context) => const DashboardScreen(),
-            ));
+        // Navigator.push(
+        //     // ignore: use_build_context_synchronously
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => const DashboardScreen(),
+        //     ));
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Account created successfully!')),
         );
       } on FirebaseAuthException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('U,have account plz login')),
+        );
         log("firebase is not working $e");
       } finally {
         setState(() {
@@ -70,6 +73,41 @@ class _signupScreenState extends State<signupScreen> {
       }
     }
   }
+
+  // Future<void> _signup() async {
+  //   setState(() {
+  //     _isLoading = true;
+  //   });
+  //   if (_formKey.currentState!.validate()) {
+  //     email = _emailController.text.trim();
+  //     name = _nameController.text.trim();
+  //     password = _passwordController.text.trim();
+  //     try {
+  //       UserCredential userCredential = await FirebaseAuth.instance
+  //           .createUserWithEmailAndPassword(email: email, password: password);
+
+  //       await FirebaseFirestore.instance
+  //           .collection('users')
+  //           .doc(userCredential.user!.uid)
+  //           .set({
+  //         'id': userCredential.user!.uid,
+  //         'name': name,
+  //         'email': email,
+  //       });
+
+  //       // Remove navigation here since Wrapper will handle it
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(content: Text('Account created successfully!')),
+  //       );
+  //     } on FirebaseAuthException catch (e) {
+  //       log("firebase error: $e");
+  //     } finally {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
