@@ -1,10 +1,8 @@
 import 'package:chatapp/router/bottomnavigation.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/view/groupchatscreen.dart';
-
 import 'package:chatapp/widget/bootomsheet.dart';
 import 'package:chatapp/widget/button.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

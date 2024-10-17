@@ -1,8 +1,5 @@
-import 'package:chatapp/auth/signup.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/view/chatscreen.dart';
-import 'package:chatapp/widget/bootomsheet.dart';
-import 'package:chatapp/widget/button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,87 +37,6 @@ class _HomescreenState extends State<Homescreen> {
                       color: Mycolor().titlecolor),
                 ),
                 const Spacer(),
-                // IconButton(
-                //     onPressed: () {},
-                //     icon: Icon(
-                //       Icons.search,
-                //       size: height * 0.045,
-                //       color: Mycolor().titlecolor,
-                //     )),
-                // IconButton(
-                //     iconSize: height * 0.03,
-                //     onPressed: () => showDialog(
-                //           context: context,
-                //           builder: (context) => AlertDialog(
-                //             actions: [
-                //               Column(
-                //                 mainAxisAlignment:
-                //                     MainAxisAlignment.spaceBetween,
-                //                 children: [
-                //                   TextButton(
-                //                       onPressed: () {
-                //                         Navigator.push(
-                //                             context,
-                //                             MaterialPageRoute(
-                //                               builder: (context) =>
-                //                                   const signupScreen(),
-                //                             ));
-                //                       },
-                //                       child: Row(
-                //                         mainAxisAlignment:
-                //                             MainAxisAlignment.spaceBetween,
-                //                         children: [
-                //                           Text(
-                //                             "Create a new user",
-                //                             style: TextStyle(
-                //                                 color:
-                //                                     Mycolor().fcontainercolor),
-                //                           ),
-                //                           Icon(
-                //                             Icons.add_circle_outline,
-                //                             color: Mycolor().fcontainercolor,
-                //                           )
-                //                         ],
-                //                       )),
-                //                   TextButton(
-                //                       onPressed: () {
-                //                         Navigator.push(
-                //                             context,
-                //                             MaterialPageRoute(
-                //                                 builder: (context) =>
-                //                                     const CreateGroupBottomSheet()));
-                //                       },
-                //                       child: Row(
-                //                           mainAxisAlignment:
-                //                               MainAxisAlignment.spaceBetween,
-                //                           children: [
-                //                             Text("Create a group",
-                //                                 style: TextStyle(
-                //                                     color: Mycolor()
-                //                                         .fcontainercolor)),
-                //                             Icon(
-                //                               Icons.add_circle_outline,
-                //                               color: Mycolor().fcontainercolor,
-                //                             )
-                //                           ])),
-                //                   Appbutton(
-                //                       ontap: () {
-                //                         Navigator.pop(context);
-                //                       },
-                //                       text: "Cancel",
-                //                       btnwidth: width * 0.2,
-                //                       btncolor: Mycolor().btncolor,
-                //                       borderSide: Border.all(
-                //                           color: Mycolor().btncolor)),
-                //                 ],
-                //               )
-                //             ],
-                //           ),
-                //         ),
-                //     icon: Icon(
-                //       Icons.add_circle_outline,
-                //       color: Mycolor().titlecolor,
-                //     )),
               ],
             ),
           ),

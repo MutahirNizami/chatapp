@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'dart:io';
 import 'package:chatapp/router/bottomnavigation.dart';
 import 'package:chatapp/router/wrapper.dart';
@@ -189,7 +187,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ]),
               ),
               SizedBox(
-                // color: Mycolor().btncolor,
                 height: height * 0.3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -232,24 +229,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   : Mycolor().fcontainercolor),
                         ),
                       ),
-                      // decoration: InputDecoration(
-                      //   filled: true,
-                      //   fillColor: Mycolor().nonfcontainercolor,
-                      //   border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(20),
-                      //       borderSide: BorderSide.none),
-                      //   hintText: 'Email',
-                      // ),
-                      // onChanged: (value) => _email = value,
-                      // validator: (value) {
-                      //   if (value == null || value.isEmpty) {
-                      //     return 'Please enter your email';
-                      //   }
-                      //   if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                      //     return 'Please enter a valid email address';
-                      //   }
-                      //   return null;
-                      // },
                       style: TextStyle(color: Mycolor().titlecolor),
                     ),
                     Appbutton(
