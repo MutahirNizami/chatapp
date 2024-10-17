@@ -2,6 +2,8 @@ import 'package:chatapp/router/bottomnavigation.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/view/groupchatscreen.dart';
 import 'package:chatapp/view/homescreen.dart';
+import 'package:chatapp/widget/bootomsheet.dart';
+import 'package:chatapp/widget/button.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,7 +40,7 @@ class _GroupscreenState extends State<Groupscreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DashboardScreen(),
+                            builder: (context) => const DashboardScreen(),
                           ));
                     },
                     icon: Icon(
@@ -53,11 +55,60 @@ class _GroupscreenState extends State<Groupscreen> {
                       fontWeight: FontWeight.w600,
                       color: Mycolor().titlecolor),
                 ),
+                const Spacer(),
                 IconButton(
                     onPressed: () {},
                     icon: Icon(
                       Icons.search,
                       size: height * 0.03,
+                      color: Mycolor().titlecolor,
+                    )),
+
+                // for alerat dialog..................................
+                IconButton(
+                    iconSize: height * 0.03,
+                    onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            contentPadding: EdgeInsets.all(8),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CreateGroupBottomSheet()));
+                                  },
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text("Add new member",
+                                            style: TextStyle(
+                                                color:
+                                                    Mycolor().fcontainercolor)),
+                                        Icon(
+                                          Icons.add_circle_outline,
+                                          color: Mycolor().fcontainercolor,
+                                        )
+                                      ])),
+                              Center(
+                                child: Appbutton(
+                                    ontap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    text: "Cancel",
+                                    btnwidth: width * 0.2,
+                                    btncolor: Mycolor().btncolor,
+                                    borderSide:
+                                        Border.all(color: Mycolor().btncolor)),
+                              )
+                            ],
+                          ),
+                        ),
+                    icon: Icon(
+                      Icons.add_circle_outline,
                       color: Mycolor().titlecolor,
                     )),
               ],
@@ -133,9 +184,10 @@ class _GroupscreenState extends State<Groupscreen> {
                                     shape: BoxShape.circle,
                                     color: Mycolor().subtitlecolor,
                                   ),
-                                  child: Icon(Icons.person),
-                                  // child: Image.asset(chats[index]
-                                  //     .imageUrl),
+                                  // child: const Icon(Icons.person),
+                                  child: Image(
+                                      image:
+                                          AssetImage("assets/images/man.png")),
                                 ),
                                 Expanded(
                                   child: Column(
@@ -153,7 +205,7 @@ class _GroupscreenState extends State<Groupscreen> {
                                       ),
                                       SizedBox(height: height * 0.005),
                                       Text(
-                                        'Last message...', // Placeholder, modify to show the last message if you have that data
+                                        'Last message...',
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.poppins(
@@ -166,7 +218,7 @@ class _GroupscreenState extends State<Groupscreen> {
                                   ),
                                 ),
                                 Text(
-                                  'Time...', // Placeholder for the time, modify if you have timestamp info
+                                  'Time...',
                                   style: GoogleFonts.poppins(
                                     fontSize: height * 0.015,
                                     color: Mycolor().subtitlecolor,

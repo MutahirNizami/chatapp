@@ -1,5 +1,4 @@
 import 'package:chatapp/auth/signup.dart';
-import 'package:chatapp/model/listmodel.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/view/chatscreen.dart';
 import 'package:chatapp/widget/bootomsheet.dart';
@@ -40,7 +39,7 @@ class _HomescreenState extends State<Homescreen> {
                       fontWeight: FontWeight.w600,
                       color: Mycolor().titlecolor),
                 ),
-                Spacer(),
+                const Spacer(),
                 IconButton(
                     onPressed: () {},
                     icon: Icon(
@@ -164,11 +163,11 @@ class _HomescreenState extends State<Homescreen> {
                             children: [
                               CircleAvatar(
                                 radius: height * 0.035,
-                                child: Icon(Icons.person),
                                 backgroundColor: Mycolor().subtitlecolor,
-                                // child: const Image(
-                                //   image: AssetImage("assets/images/man.png"),
-                                // ),
+                                // child: const Icon(Icons.person),
+                                child: const Image(
+                                  image: AssetImage("assets/images/man.png"),
+                                ),
                               ),
                               SizedBox(
                                 height: height * 0.007,
@@ -187,6 +186,8 @@ class _HomescreenState extends State<Homescreen> {
                       });
                 }),
           ),
+
+          //list of users.....................................
           Expanded(
             child: Container(
               padding: EdgeInsets.only(top: height * 0.04),
@@ -248,7 +249,10 @@ class _HomescreenState extends State<Homescreen> {
                                     shape: BoxShape.circle,
                                     color: Mycolor().subtitlecolor,
                                   ),
-                                  child: Icon(Icons.person),
+                                  // child: const Icon(Icons.person),
+                                  child: Image(
+                                      image:
+                                          AssetImage("assets/images/man.png")),
                                 ),
                                 Expanded(
                                   child: Column(

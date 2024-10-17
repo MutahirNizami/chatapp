@@ -7,7 +7,7 @@ class ChatBubble extends StatelessWidget {
   final String message;
   final String time;
   final String? imageurl;
-  final String? senderName;
+  // final String senderName;
 
   const ChatBubble({
     super.key,
@@ -15,7 +15,7 @@ class ChatBubble extends StatelessWidget {
     required this.message,
     required this.time,
     this.imageurl,
-    this.senderName,
+    // required this.senderName,
   });
 
   @override
@@ -57,6 +57,14 @@ class ChatBubble extends StatelessWidget {
                   ? CrossAxisAlignment.end
                   : CrossAxisAlignment.start,
               children: [
+                //sender name
+                // if (senderName.isNotEmpty)
+                //   Text(
+                //     senderName,
+                //     style: GoogleFonts.poppins(
+                //         color: Mycolor().titlecolor, fontSize: height * 0.017),
+                //   ),
+
                 // Display image if available............
                 if (imageurl != null && imageurl!.isNotEmpty)
                   Padding(

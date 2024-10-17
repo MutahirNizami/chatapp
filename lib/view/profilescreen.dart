@@ -142,16 +142,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               GestureDetector(
                 onTap: _pickImage,
-                child: CircleAvatar(
-                  radius: height * 0.07,
-                  backgroundImage:
-                      _imageFile != null ? FileImage(_imageFile!) : null,
-                  child: _imageFile == null
-                      ? Icon(Icons.person, size: height * 0.1)
-                      : null,
-                ),
+                child: Stack(alignment: Alignment(1, 1), children: [
+                  CircleAvatar(
+                    radius: height * 0.07,
+                    backgroundImage:
+                        _imageFile != null ? FileImage(_imageFile!) : null,
+                    child: _imageFile == null
+                        ? Icon(Icons.person, size: height * 0.1)
+                        : null,
+                  ),
+                  CircleAvatar(
+                    radius: height * 0.02,
+                    backgroundColor: Mycolor().iconcontainer,
+                    child: Icon(
+                      Icons.edit,
+                      color: Mycolor().fcontainercolor,
+                      size: height * 0.03,
+                    ),
+                  )
+                ]),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: height * 0.025),
               TextFormField(
                 initialValue: _name,
                 decoration: InputDecoration(

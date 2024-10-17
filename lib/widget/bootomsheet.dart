@@ -17,7 +17,7 @@ class CreateGroupBottomSheet extends StatefulWidget {
 
 class _CreateGroupBottomSheetState extends State<CreateGroupBottomSheet> {
   List<String> selectedUserIds = [];
-  TextEditingController _groupNameController = TextEditingController();
+  final TextEditingController _groupNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +27,14 @@ class _CreateGroupBottomSheetState extends State<CreateGroupBottomSheet> {
       child: Scaffold(
         backgroundColor: Mycolor().backcolor,
         body: Padding(
-          padding: EdgeInsets.only(bottom: height * 0.04, top: height * 0.05),
+          padding: EdgeInsets.symmetric(
+              vertical: height * 0.03, horizontal: width * 0.03),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            // mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding:
-                    EdgeInsets.only(top: height * 0.02, right: width * 0.06),
+                    EdgeInsets.only(right: width * 0.07, left: width * 0.03),
                 child: TextFormField(
                   controller: _groupNameController,
                   decoration: InputDecoration(
@@ -144,11 +145,12 @@ class _CreateGroupBottomSheetState extends State<CreateGroupBottomSheet> {
     }
   }
 
+  // cancle ......................
   _cancle() {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => DashboardScreen(),
+          builder: (context) => const DashboardScreen(),
         ));
   }
 }

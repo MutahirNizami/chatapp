@@ -137,7 +137,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                     }
                     // list of messages get from firebase............
                     final messagesList = snapshot.data!.docs;
-                    // final Sendername = widget.userModel;
+
                     return ListView.builder(
                       reverse: true,
                       itemCount: messagesList.length,
@@ -146,7 +146,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                         print(message.data());
                         final isSentByMe = message["senderId"] == currentUserId;
                         return ChatBubble(
-                          // senderName: Sendername,
+                          // senderName: message['senderName'],
                           time: _formatTimestamp(message["timeStamp"]),
                           isSentByMe: isSentByMe,
                           message: message['message'],
@@ -299,7 +299,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
         //     .doc(senderId)
         //     .get();
 
-        // String senderName = senderDoc['name'] ?? 'Unknown';
+        final senderName = FirebaseAuth.instance.currentUser!.displayName;
         await FirebaseFirestore.instance
             .collection("groupchat")
             .doc(chatId)
@@ -308,7 +308,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
           "message": text.isNotEmpty ? text : '',
           "image": imageMessage ?? '',
           "senderId": senderId,
-          // "senderName": senderName,
+          "senderName": senderName,
           "timeStamp": FieldValue.serverTimestamp(),
         });
 

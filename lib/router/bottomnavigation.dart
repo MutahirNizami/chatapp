@@ -20,8 +20,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   List<Widget> get _pages => [
         const Homescreen(),
-        Groupscreen(),
-        ProfileScreen(),
+        const Groupscreen(),
+        const ProfileScreen(),
       ];
 
   void _onItemTapped(int index) {

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:chatapp/model/listmodel.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/chatbubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -67,7 +68,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
+    //save the user id from firebaseauth.....................
     final currentUserId = FirebaseAuth.instance.currentUser!.uid;
     //id of user...................
     final chatId = getChatID(currentUserId, widget.userModel['id']);
@@ -98,7 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   SizedBox(width: width * 0.03),
                   Text(
-                    widget.userModel['name'], // User Name for one-to-one chat
+                    widget.userModel['name'],
                     style: GoogleFonts.poppins(
                       fontSize: height * 0.025,
                       color: Colors.white,
@@ -113,7 +114,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ],
               ),
 
-              // Messages List
+              // Messages List............................
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
@@ -135,7 +136,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       );
                     }
 
-                    // list of messages get from firebase
+                    // list of messages get from firebase......................
                     final messagesList = snapshot.data!.docs;
 
                     return ListView.builder(
@@ -149,6 +150,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           isSentByMe: isSentByMe,
                           message: message['message'],
                           imageurl: message['image'],
+                          // senderName: message['senderName'],
                         );
                       },
                     );
@@ -156,7 +158,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
 
-              // Text Input Area
+              // Text Input Area..............................
               Container(
                 margin: EdgeInsets.only(top: height * 0.03),
                 decoration: BoxDecoration(
@@ -207,7 +209,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  // Date and time formatting
+  // Date and time formate...........................
   String _formatTimestamp(dynamic timestamp) {
     if (timestamp is Timestamp) {
       DateTime dateTime = timestamp.toDate().toLocal();
@@ -228,6 +230,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (text.isNotEmpty || imageMessage != null) {
       try {
         final senderId = FirebaseAuth.instance.currentUser!.uid;
+        // final senderName = FirebaseAuth.instance.currentUser!.displayName;
         await FirebaseFirestore.instance
             .collection("chat")
             .doc(chatId)
@@ -236,6 +239,7 @@ class _ChatScreenState extends State<ChatScreen> {
           "message": text.isNotEmpty ? text : '',
           "image": imageMessage ?? '',
           "senderId": senderId,
+          // "senderName": senderName,
           "receiverId": widget.userModel["id"],
           "timeStamp": FieldValue.serverTimestamp(),
         });
@@ -262,4 +266,23 @@ class _ChatScreenState extends State<ChatScreen> {
       }
     }
   }
+
+  // for display sendername............
+
+  // Future<void> getusername() async {
+  //   // final senderName = FirebaseFirestore.instance.collection('users').where('id',isEqualTo:FirebaseAuth.instance.currentUser!.uid ).get();
+
+  //   final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+  //   var userSnapshot = await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .where('id', isEqualTo: currentUserId)
+  //       .get();
+  //   if (userSnapshot.docs.isNotEmpty) {
+  //     var senderName = userSnapshot.docs.first.data();
+
+  //     // _sendMessage(senderName);
+  //   } else {
+  //     print('No user found with this ID.');
+  //   }
+  // }
 }
