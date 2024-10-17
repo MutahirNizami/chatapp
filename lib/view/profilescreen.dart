@@ -6,6 +6,7 @@ import 'package:chatapp/router/wrapper.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/button.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,6 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool _haserror = false;
   String _name = '';
   String _email = '';
+
   // ignore: unused_field
   String? _imageUrl;
   File? _imageFile;
@@ -133,13 +135,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
           style: TextStyle(fontSize: height * 0.03),
         ),
         titleTextStyle: TextStyle(color: Mycolor().titlecolor),
+        actions: <Widget>[
+          InkWell(
+            onTap: _signout,
+            child: Padding(
+              padding: EdgeInsets.only(right: width * 0.05),
+              child: Row(
+                children: [
+                  Text(
+                    "Logout",
+                    style: GoogleFonts.poppins(
+                      color: Mycolor().titlecolor,
+                    ),
+                  ),
+                  Icon(
+                    Icons.logout_outlined,
+                    color: Mycolor().titlecolor,
+                    size: height * 0.03,
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               GestureDetector(
                 onTap: _pickImage,
@@ -237,6 +262,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ],
                 ),
+              ),
+              SizedBox(
+                height: height * 0.05,
               ),
             ],
           ),
