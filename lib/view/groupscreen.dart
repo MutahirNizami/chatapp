@@ -49,20 +49,20 @@ class _GroupscreenState extends State<Groupscreen> {
                       color: Mycolor().titlecolor,
                     )),
                 Text(
-                  "Groups",
+                  "My Groups",
                   style: GoogleFonts.poppins(
-                      fontSize: height * 0.035,
+                      fontSize: height * 0.032,
                       fontWeight: FontWeight.w600,
                       color: Mycolor().titlecolor),
                 ),
                 const Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.search,
-                      size: height * 0.03,
-                      color: Mycolor().titlecolor,
-                    )),
+                // IconButton(
+                //     onPressed: () {},
+                //     icon: Icon(
+                //       Icons.search,
+                //       size: height * 0.03,
+                //       color: Mycolor().titlecolor,
+                //     )),
 
                 // for alerat dialog..................................
                 IconButton(
@@ -140,8 +140,13 @@ class _GroupscreenState extends State<Groupscreen> {
                     }
 
                     if (snapshot.data!.docs.isEmpty) {
-                      return const Center(
-                        child: Text('No groups found.'),
+                      return Center(
+                        child: Text(
+                          'create group with users ... ',
+                          style: GoogleFonts.poppins(
+                              fontSize: height * 0.025,
+                              color: Mycolor().titlecolor),
+                        ),
                       );
                     }
 

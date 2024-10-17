@@ -36,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       body: _pages[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Mycolor().nonfcontainercolor,
+        backgroundColor: Mycolor().backcolor,
         selectedFontSize: height * 0.015,
         elevation: height * 0.02,
         items: [

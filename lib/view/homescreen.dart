@@ -40,93 +40,93 @@ class _HomescreenState extends State<Homescreen> {
                       color: Mycolor().titlecolor),
                 ),
                 const Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.search,
-                      size: height * 0.045,
-                      color: Mycolor().titlecolor,
-                    )),
-                IconButton(
-                    iconSize: height * 0.03,
-                    onPressed: () => showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            actions: [
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const signupScreen(),
-                                            ));
-                                      },
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "Create a new user",
-                                            style: TextStyle(
-                                                color:
-                                                    Mycolor().fcontainercolor),
-                                          ),
-                                          Icon(
-                                            Icons.add_circle_outline,
-                                            color: Mycolor().fcontainercolor,
-                                          )
-                                        ],
-                                      )),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const CreateGroupBottomSheet()));
-                                      },
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text("Create a group",
-                                                style: TextStyle(
-                                                    color: Mycolor()
-                                                        .fcontainercolor)),
-                                            Icon(
-                                              Icons.add_circle_outline,
-                                              color: Mycolor().fcontainercolor,
-                                            )
-                                          ])),
-                                  Appbutton(
-                                      ontap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      text: "Cancel",
-                                      btnwidth: width * 0.2,
-                                      btncolor: Mycolor().btncolor,
-                                      borderSide: Border.all(
-                                          color: Mycolor().btncolor)),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                    icon: Icon(
-                      Icons.add_circle_outline,
-                      color: Mycolor().titlecolor,
-                    )),
+                // IconButton(
+                //     onPressed: () {},
+                //     icon: Icon(
+                //       Icons.search,
+                //       size: height * 0.045,
+                //       color: Mycolor().titlecolor,
+                //     )),
+                // IconButton(
+                //     iconSize: height * 0.03,
+                //     onPressed: () => showDialog(
+                //           context: context,
+                //           builder: (context) => AlertDialog(
+                //             actions: [
+                //               Column(
+                //                 mainAxisAlignment:
+                //                     MainAxisAlignment.spaceBetween,
+                //                 children: [
+                //                   TextButton(
+                //                       onPressed: () {
+                //                         Navigator.push(
+                //                             context,
+                //                             MaterialPageRoute(
+                //                               builder: (context) =>
+                //                                   const signupScreen(),
+                //                             ));
+                //                       },
+                //                       child: Row(
+                //                         mainAxisAlignment:
+                //                             MainAxisAlignment.spaceBetween,
+                //                         children: [
+                //                           Text(
+                //                             "Create a new user",
+                //                             style: TextStyle(
+                //                                 color:
+                //                                     Mycolor().fcontainercolor),
+                //                           ),
+                //                           Icon(
+                //                             Icons.add_circle_outline,
+                //                             color: Mycolor().fcontainercolor,
+                //                           )
+                //                         ],
+                //                       )),
+                //                   TextButton(
+                //                       onPressed: () {
+                //                         Navigator.push(
+                //                             context,
+                //                             MaterialPageRoute(
+                //                                 builder: (context) =>
+                //                                     const CreateGroupBottomSheet()));
+                //                       },
+                //                       child: Row(
+                //                           mainAxisAlignment:
+                //                               MainAxisAlignment.spaceBetween,
+                //                           children: [
+                //                             Text("Create a group",
+                //                                 style: TextStyle(
+                //                                     color: Mycolor()
+                //                                         .fcontainercolor)),
+                //                             Icon(
+                //                               Icons.add_circle_outline,
+                //                               color: Mycolor().fcontainercolor,
+                //                             )
+                //                           ])),
+                //                   Appbutton(
+                //                       ontap: () {
+                //                         Navigator.pop(context);
+                //                       },
+                //                       text: "Cancel",
+                //                       btnwidth: width * 0.2,
+                //                       btncolor: Mycolor().btncolor,
+                //                       borderSide: Border.all(
+                //                           color: Mycolor().btncolor)),
+                //                 ],
+                //               )
+                //             ],
+                //           ),
+                //         ),
+                //     icon: Icon(
+                //       Icons.add_circle_outline,
+                //       color: Mycolor().titlecolor,
+                //     )),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(left: width * 0.04, bottom: height * 0.02),
-            child: Text("R e c e n t",
+            child: Text("All Users",
                 style: GoogleFonts.poppins(
                     fontSize: height * 0.023,
                     fontWeight: FontWeight.w500,
@@ -190,113 +190,129 @@ class _HomescreenState extends State<Homescreen> {
           //list of users.....................................
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(top: height * 0.04),
+              padding: EdgeInsets.only(top: height * 0.025),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(height * 0.065),
                       topRight: Radius.circular(height * 0.065)),
                   color: Mycolor().fcontainercolor),
-              child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('users')
-                      .where("id",
-                          isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ChatScreen(
-                                    userModel: snapshot.data!.docs[index],
-                                  ),
-                                ));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                right: width * 0.05,
-                                top: height * 0.01,
-                                bottom: height * 0.02,
-                                left: width * 0.02),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              // mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Container(
-                                  height: height * 0.07,
-                                  width: width * 0.2,
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: width * 0.07, bottom: height * 0.02),
+                    child: Text(
+                      "My chats",
+                      style: GoogleFonts.poppins(
+                          fontSize: height * 0.025,
+                          color: Mycolor().titlecolor),
+                    ),
+                  ),
+                  StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('users')
+                          .where("id",
+                              isNotEqualTo:
+                                  FirebaseAuth.instance.currentUser!.uid)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatScreen(
+                                        userModel: snapshot.data!.docs[index],
+                                      ),
+                                    ));
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    right: width * 0.05,
+                                    top: height * 0.01,
+                                    bottom: height * 0.02,
+                                    left: width * 0.02),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  // mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      height: height * 0.07,
+                                      width: width * 0.2,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Mycolor().subtitlecolor,
+                                            blurRadius: height * 0.003,
+                                          ),
+                                        ],
+                                        shape: BoxShape.circle,
                                         color: Mycolor().subtitlecolor,
-                                        blurRadius: height * 0.003,
                                       ),
-                                    ],
-                                    shape: BoxShape.circle,
-                                    color: Mycolor().subtitlecolor,
-                                  ),
-                                  // child: const Icon(Icons.person),
-                                  child: Image(
-                                      image:
-                                          AssetImage("assets/images/man.png")),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        snapshot.data!.docs[index]["name"],
-                                        style: GoogleFonts.poppins(
-                                          fontSize: height * 0.018,
-                                          fontWeight: FontWeight.w600,
-                                          color: Mycolor().titlecolor,
-                                        ),
+                                      // child: const Icon(Icons.person),
+                                      child: Image(
+                                          image: AssetImage(
+                                              "assets/images/man.png")),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            snapshot.data!.docs[index]["name"],
+                                            style: GoogleFonts.poppins(
+                                              fontSize: height * 0.018,
+                                              fontWeight: FontWeight.w600,
+                                              color: Mycolor().titlecolor,
+                                            ),
+                                          ),
+                                          SizedBox(height: height * 0.005),
+                                          Text(
+                                            "last message............",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: GoogleFonts.poppins(
+                                              fontSize: height * 0.02,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(height: height * 0.005),
-                                      Text(
-                                        "last message............",
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: height * 0.02,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.grey,
-                                        ),
+                                    ),
+                                    Text(
+                                      // chats[index].time,
+                                      "time....",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: height * 0.015,
+                                        color: Mycolor().subtitlecolor,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  // chats[index].time,
-                                  "time....",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: height * 0.015,
-                                    color: Mycolor().subtitlecolor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                              ),
+                            );
+                          },
                         );
-                      },
-                    );
-                  }),
+                      }),
+                ],
+              ),
             ),
           )
         ],

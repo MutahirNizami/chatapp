@@ -22,6 +22,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
+  bool _haserror = false;
   String _name = '';
   String _email = '';
   // ignore: unused_field
@@ -138,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Form(
           key: _formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
                 onTap: _pickImage,
@@ -162,64 +163,79 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )
                 ]),
               ),
-              SizedBox(height: height * 0.025),
-              TextFormField(
-                initialValue: _name,
-                decoration: InputDecoration(
-                    fillColor: Mycolor().nonfcontainercolor,
-                    filled: true,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide.none),
-                    hintText: 'Name'),
-                onChanged: (value) => _name = value,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-                style: TextStyle(color: Mycolor().titlecolor),
-              ),
-              TextFormField(
-                initialValue: _email,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Mycolor().nonfcontainercolor,
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide.none),
-                  hintText: 'Email',
-                ),
-                onChanged: (value) => _email = value,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Please enter a valid email address';
-                  }
-                  return null;
-                },
-                style: TextStyle(color: Mycolor().titlecolor),
-              ),
-              Appbutton(
-                ontap: _updateUserProfile,
-                text: 'Update',
-                btncolor: Mycolor().btncolor,
-                btnwidth: width * 0.4,
-                borderradius: height * 0.03,
-                textcolor: Mycolor().titlecolor,
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: height * 0.05, left: width * 0.7),
-                child: Appbutton(
-                  ontap: _signout,
-                  text: 'Logout',
-                  btncolor: Mycolor().btncolor,
-                  btnwidth: width * 0.2,
-                  borderradius: height * 0.03,
-                  textcolor: Mycolor().titlecolor,
+              SizedBox(
+                // color: Mycolor().btncolor,
+                height: height * 0.3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextFormField(
+                      initialValue: _name,
+                      decoration: InputDecoration(
+                        hintText: "name",
+                        hintStyle: TextStyle(color: Mycolor().subtitlecolor),
+                        filled: true,
+                        fillColor: Mycolor().fcontainercolor,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(height * 0.02),
+                          borderSide: BorderSide(
+                              color: _haserror
+                                  ? Mycolor().titlecolor
+                                  : Mycolor().fcontainercolor),
+                        ),
+                      ),
+                      onChanged: (value) => _name = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      },
+                      style: TextStyle(color: Mycolor().titlecolor),
+                    ),
+                    TextFormField(
+                      initialValue: _email,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Mycolor().fcontainercolor,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(height * 0.02),
+                          borderSide: BorderSide(
+                              color: _haserror
+                                  ? Mycolor().titlecolor
+                                  : Mycolor().fcontainercolor),
+                        ),
+                      ),
+                      // decoration: InputDecoration(
+                      //   filled: true,
+                      //   fillColor: Mycolor().nonfcontainercolor,
+                      //   border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(20),
+                      //       borderSide: BorderSide.none),
+                      //   hintText: 'Email',
+                      // ),
+                      // onChanged: (value) => _email = value,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter your email';
+                      //   }
+                      //   if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      //     return 'Please enter a valid email address';
+                      //   }
+                      //   return null;
+                      // },
+                      style: TextStyle(color: Mycolor().titlecolor),
+                    ),
+                    Appbutton(
+                      ontap: _updateUserProfile,
+                      text: 'Update',
+                      btncolor: Mycolor().btncolor,
+                      btnwidth: width * 0.4,
+                      borderradius: height * 0.03,
+                      textcolor: Mycolor().titlecolor,
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -51,12 +51,12 @@ class _signupScreenState extends State<signupScreen> {
           'email': email,
         });
 //navigat to dashboard ...............................
-        // Navigator.push(
-        //     // ignore: use_build_context_synchronously
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => const DashboardScreen(),
-        //     ));
+        Navigator.push(
+            // ignore: use_build_context_synchronously
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DashboardScreen(),
+            ));
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Account created successfully!')),

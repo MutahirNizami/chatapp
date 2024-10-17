@@ -1,6 +1,6 @@
 import 'package:chatapp/auth/Login.dart';
 import 'package:chatapp/auth/Signup.dart';
-import 'package:chatapp/router/bottomnavigation.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +19,7 @@ class _WrapperState extends State<Wrapper> {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return const DashboardScreen();
+              return const signupScreen();
             } else {
               return const LoginScreen();
             }
