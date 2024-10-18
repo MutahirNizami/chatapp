@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'dart:io';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/chatbubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,9 +61,6 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
     } catch (error) {
       log("error got ");
     }
-    // setState(() {
-    //   _selectedmedia = File(pickedFile.path); // Store the selected file
-    // });
   }
 
   @override
@@ -106,11 +106,14 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                     ),
                   ),
                   const Spacer(),
-                  Icon(
-                    Icons.search,
-                    size: height * 0.045,
-                    color: Mycolor().titlecolor,
-                  ),
+                  IconButton(
+                    onPressed: () => _deletegroup(context),
+                    icon: Icon(
+                      Icons.delete,
+                      size: height * 0.045,
+                      color: Mycolor().titlecolor,
+                    ),
+                  )
                 ],
               ),
 
@@ -157,69 +160,6 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                   },
                 ),
               ),
-              // Expanded(
-              //   child: StreamBuilder<QuerySnapshot>(
-              //     stream: FirebaseFirestore.instance
-              //         .collection('groupchat')
-              //         .doc(chatId)
-              //         .collection("messages")
-              //         .orderBy("timeStamp", descending: true)
-              //         .snapshots(),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.hasError) {
-              //         return Center(
-              //           child: Text('Error: ${snapshot.error}'),
-              //         );
-              //       }
-
-              //       if (!snapshot.hasData) {
-              //         return const Center(
-              //           child: CircularProgressIndicator(),
-              //         );
-              //       }
-
-              //       final messagesList = snapshot.data!.docs;
-
-              //       return ListView.builder(
-              //         reverse: true,
-              //         itemCount: messagesList.length,
-              //         itemBuilder: (BuildContext context, int index) {
-              //           final message = messagesList[index];
-              //           final isSentByMe = message["senderId"] == currentUserId;
-
-              //           return Column(
-              //             crossAxisAlignment: isSentByMe
-              //                 ? CrossAxisAlignment.end
-              //                 : CrossAxisAlignment.start,
-              //             children: [
-              //               // Display sender name for other users (not for self)
-              //               if (!isSentByMe)
-              //                 Padding(
-              //                   padding:
-              //                       EdgeInsets.only(left: 8.0, bottom: 4.0),
-              //                   child: Text(
-              //                     message['senderName'] ?? 'Unknown',
-              //                     style: TextStyle(
-              //                       color: Colors.white,
-              //                       fontSize: 14,
-              //                       fontWeight: FontWeight.bold,
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ChatBubble(
-              //                 time: _formatTimestamp(message["timeStamp"]),
-              //                 senderName: widget.userModel![index]["name "],
-              //                 isSentByMe: isSentByMe,
-              //                 message: message['message'],
-              //                 imageurl: message['image'],
-              //               ),
-              //             ],
-              //           );
-              //         },
-              //       );
-              //     },
-              //   ),
-              // ),
 
               // Text Input Area
 
@@ -288,7 +228,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
   }
 
   // Function to send a message.............................
-  void _sendMessage(String chatId, {String? imageMessage}) async {
+  Future _sendMessage(String chatId, {String? imageMessage}) async {
     final text = _controller.text.trim();
 
     if (text.isNotEmpty || imageMessage != null) {
@@ -331,6 +271,30 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
           },
         );
       }
+    }
+  }
+
+  // deleting the group.............
+  Future<void> _deletegroup(BuildContext context) async {
+    try {
+      final groupId = widget.groupModel.id;
+      await FirebaseFirestore.instance
+          .collection("groups")
+          .doc(groupId)
+          .delete();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Delete group successfully'),
+        ),
+      );
+      Navigator.pop(context);
+      print("delted");
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Failed to deletion "),
+        ),
+      );
     }
   }
 }

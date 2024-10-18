@@ -29,7 +29,7 @@ class _GroupscreenState extends State<Groupscreen> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-                vertical: height * 0.015, horizontal: width * 0.02),
+                vertical: height * 0.015, horizontal: width * 0.01),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -54,13 +54,6 @@ class _GroupscreenState extends State<Groupscreen> {
                       color: Mycolor().titlecolor),
                 ),
                 const Spacer(),
-                // IconButton(
-                //     onPressed: () {},
-                //     icon: Icon(
-                //       Icons.search,
-                //       size: height * 0.03,
-                //       color: Mycolor().titlecolor,
-                //     )),
 
                 // for alerat dialog..................................
                 IconButton(
@@ -142,7 +135,7 @@ class _GroupscreenState extends State<Groupscreen> {
                         child: Text(
                           'create group with users ... ',
                           style: GoogleFonts.poppins(
-                              fontSize: height * 0.025,
+                              fontSize: height * 0.02,
                               color: Mycolor().titlecolor),
                         ),
                       );

@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:chatapp/model/listmodel.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/chatbubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

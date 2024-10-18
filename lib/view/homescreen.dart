@@ -1,5 +1,6 @@
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/view/chatscreen.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -160,11 +161,11 @@ class _HomescreenState extends State<Homescreen> {
                                 padding: EdgeInsets.only(
                                     right: width * 0.05,
                                     top: height * 0.01,
-                                    bottom: height * 0.02,
+                                    bottom: height * 0.005,
                                     left: width * 0.02),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  // mainAxisSize: MainAxisSize.max,
+                                  mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Container(
                                       height: height * 0.07,
