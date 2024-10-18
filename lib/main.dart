@@ -1,5 +1,4 @@
 import 'package:chatapp/router/wrapper.dart';
-import 'package:chatapp/view/groupscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

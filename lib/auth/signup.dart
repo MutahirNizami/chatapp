@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 
 import 'package:chatapp/auth/Login.dart';
@@ -52,12 +54,11 @@ class _signupScreenState extends State<signupScreen> {
         });
 //navigat to dashboard ...............................
         Navigator.push(
-            // ignore: use_build_context_synchronously
             context,
             MaterialPageRoute(
               builder: (context) => const DashboardScreen(),
             ));
-        // ignore: use_build_context_synchronously
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Account created successfully!')),
         );
@@ -229,16 +230,37 @@ class _signupScreenState extends State<signupScreen> {
                   },
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: height * 0.03),
-                  child: Appbutton(
-                    ontap: _signup,
-                    text: _isLoading ? "loading.." : "Signup",
-                    fontWeight: FontWeight.w600,
-                    fontSize: height * 0.022,
-                    btncolor: Mycolor().btncolor,
-                    textcolor: Mycolor().titlecolor,
-                    btnheight: height * 0.07,
-                    btnwidth: width,
+                  padding: EdgeInsets.symmetric(vertical: height * 0.02),
+                  child: SizedBox(
+                    width: width,
+                    height: height * 0.07,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Mycolor().btncolor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(height * 0.02),
+                        ),
+                      ),
+                      onPressed: _isLoading
+                          ? null
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                _signup();
+                              }
+                            },
+                      child: _isLoading
+                          ? CircularProgressIndicator(
+                              color: Mycolor().titlecolor,
+                            )
+                          : Text(
+                              "Sign up",
+                              style: GoogleFonts.poppins(
+                                fontSize: height * 0.022,
+                                fontWeight: FontWeight.w600,
+                                color: Mycolor().titlecolor,
+                              ),
+                            ),
+                    ),
                   ),
                 ),
                 Row(
