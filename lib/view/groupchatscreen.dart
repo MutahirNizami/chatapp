@@ -3,6 +3,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:chatapp/utilites/colors.dart';
+import 'package:chatapp/widget/button.dart';
 import 'package:chatapp/widget/chatbubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -107,7 +108,7 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                   ),
                   const Spacer(),
                   IconButton(
-                    onPressed: () => _deletegroup(context),
+                    onPressed: () => _showDeleteConfirmation(context),
                     icon: Icon(
                       Icons.delete,
                       size: height * 0.045,
@@ -275,26 +276,61 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
   }
 
   // deleting the group.............
-  Future<void> _deletegroup(BuildContext context) async {
+  Future<void> _deleteGroup(BuildContext context) async {
     try {
       final groupId = widget.groupModel.id;
       await FirebaseFirestore.instance
           .collection("groups")
           .doc(groupId)
           .delete();
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Delete group successfully'),
+          content: Text('Group deleted successfully'),
         ),
       );
       Navigator.pop(context);
-      print("delted");
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Failed to deletion "),
+          content: Text("Failed to delete group"),
         ),
       );
     }
+  }
+
+  _showDeleteConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text(
+            'Delete Group',
+          ),
+          content: const Text('Are you sure ?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext);
+              },
+              child: const Text('Cancel'),
+            ),
+            Appbutton(
+                btncolor: Mycolor().btncolor,
+                btnheight: 25,
+                btnwidth: 50,
+                ontap: () async {
+                  Navigator.pop(dialogContext);
+                  await _deleteGroup(context);
+                },
+                text: "OK"),
+            // TextButton(
+            //   onPressed: () async {},
+            //   child: const Text('OK'),
+            // ),
+          ],
+        );
+      },
+    );
   }
 }

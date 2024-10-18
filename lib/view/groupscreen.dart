@@ -135,7 +135,7 @@ class _GroupscreenState extends State<Groupscreen> {
                         child: Text(
                           'create group with users ... ',
                           style: GoogleFonts.poppins(
-                              fontSize: height * 0.02,
+                              fontSize: height * 0.023,
                               color: Mycolor().titlecolor),
                         ),
                       );
