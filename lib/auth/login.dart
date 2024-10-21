@@ -229,15 +229,24 @@
 //   }
 // }
 
-import 'package:chatapp/controllers/login_controller.dart';
+import 'package:chatapp/controllers/authcontroller/login_controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:chatapp/auth/Signup.dart';
 
 import 'package:chatapp/utilites/colors.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+
   final LoginController loginController = Get.put(LoginController());
 
   @override
@@ -371,7 +380,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        Get.to(() => signupScreen());
+                        Get.to(() => const signupScreen());
                       },
                       child: Text(
                         "Sign Up",

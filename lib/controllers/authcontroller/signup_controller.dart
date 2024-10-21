@@ -33,7 +33,7 @@ class SignupController extends GetxController {
       Get.offAll(() => DashboardScreen());
     } catch (e) {
       log("Firebase error: $e");
-      Get.snackbar('go to login', 'Already have account, please login .');
+      Get.snackbar("Don't Signup", 'Already have account, please login .');
     } finally {
       isLoading.value = false;
     }

@@ -6,6 +6,7 @@ import 'package:chatapp/widget/button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Groupscreen extends StatefulWidget {
@@ -16,6 +17,8 @@ class Groupscreen extends StatefulWidget {
 }
 
 class _GroupscreenState extends State<Groupscreen> {
+  // final GroupChatController groupChatController =
+  //     Get.put(GroupChatController());
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -38,8 +41,7 @@ class _GroupscreenState extends State<Groupscreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const DashboardScreen(),
-                          ));
+                              builder: (context) => const DashboardScreen()));
                     },
                     icon: Icon(
                       Icons.arrow_back_ios_new_rounded,

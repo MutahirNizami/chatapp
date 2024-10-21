@@ -15,7 +15,7 @@
 
 // class Homecontroller extends GetxController {
 //   var users = <QueryDocumentSnapshot>[].obs;
-//   var isLoading = true.obs; 
+//   var isLoading = true.obs;
 
 //   @override
 //   void onInit() {
@@ -34,7 +34,6 @@
 //     });
 //   }
 // }
-
 
 // class ChatController extends GetxController {
 //   final TextEditingController messageController = TextEditingController();
@@ -90,3 +89,81 @@
 //     }
 //   }
 // }
+
+import 'dart:developer';
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+
+class ChatController extends GetxController {
+  final TextEditingController messageController = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
+  var imageUrl = ''.obs;
+  var isLoading = false.obs;
+
+  String getChatID(String senderID, String receiverID) {
+    return senderID.hashCode <= receiverID.hashCode
+        ? '$senderID\_$receiverID'
+        : '$receiverID\_$senderID';
+  }
+
+  Future<void> pickMedia(String chatId) async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile == null) return;
+
+    String uniqueFilename = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages = referenceRoot.child('images');
+    Reference referenceImageToUpload = referenceDirImages.child(uniqueFilename);
+
+    try {
+      isLoading.value = true;
+      await referenceImageToUpload.putFile(File(pickedFile.path));
+      imageUrl.value = await referenceImageToUpload.getDownloadURL();
+      log('Image URL: $imageUrl');
+      sendMessage(chatId, imageMessage: imageUrl.value);
+    } catch (error) {
+      log("Error uploading image: $error");
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void sendMessage(String chatId, {String? imageMessage}) async {
+    final text = messageController.text.trim();
+
+    if (text.isNotEmpty || imageMessage != null) {
+      try {
+        final senderId = FirebaseAuth.instance.currentUser!.uid;
+        await FirebaseFirestore.instance
+            .collection("chat")
+            .doc(chatId)
+            .collection("messages")
+            .add({
+          "message": text.isNotEmpty ? text : '',
+          "image": imageMessage ?? '',
+          "senderId": senderId,
+          "receiverId": chatId.split('_')[1], // Receiver ID logic
+          "timeStamp": FieldValue.serverTimestamp(),
+        });
+
+        messageController.clear();
+        log("Message sent");
+      } catch (e) {
+        Get.snackbar("Error", "Failed to send message. Please try again.");
+      }
+    }
+  }
+
+  @override
+  void onClose() {
+    messageController.dispose();
+    super.onClose();
+  }
+}

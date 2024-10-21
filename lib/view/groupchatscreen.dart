@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -205,6 +206,12 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                     ),
                   ),
                   style: TextStyle(color: Mycolor().titlecolor),
+                  onFieldSubmitted: (value) {
+                    {
+                      _sendMessage(chatId);
+                      _controller.clear();
+                    }
+                  },
                 ),
               ),
             ],
@@ -324,10 +331,6 @@ class _GoupchatscreenState extends State<Goupchatscreen> {
                   await _deleteGroup(context);
                 },
                 text: "OK"),
-            // TextButton(
-            //   onPressed: () async {},
-            //   child: const Text('OK'),
-            // ),
           ],
         );
       },

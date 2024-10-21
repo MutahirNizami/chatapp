@@ -26,9 +26,12 @@ class LoginController extends GetxController {
       );
 
       Get.snackbar("Success", "Login Successful");
+
       Get.offAll(() => DashboardScreen());
+      emailController.clear();
+      passwordController.clear();
     } on FirebaseAuthException catch (e) {
-      Get.snackbar("Error", e.message ?? "Login failed");
+      Get.snackbar("Login failed", "Please SignUp you accout");
     } finally {
       isLoading(false);
     }

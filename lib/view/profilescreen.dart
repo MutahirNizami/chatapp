@@ -120,7 +120,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Get.off(() => DashboardScreen());
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const DashboardScreen()));
             },
             icon: Icon(
               Icons.arrow_back_ios_new_rounded,

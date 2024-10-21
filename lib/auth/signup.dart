@@ -241,7 +241,7 @@
 //                         Navigator.push(
 //                             context,
 //                             MaterialPageRoute(
-//                               builder: (context) => const LoginScreen(),
+//                               builder: (context) => LoginScreen(),
 //                             ));
 //                       },
 //                       child: Text(
@@ -265,9 +265,10 @@
 // }
 
 import 'package:chatapp/auth/Login.dart';
+import 'package:chatapp/controllers/authcontroller/signup_controller.dart';
 
 import 'package:chatapp/utilites/colors.dart';
-import 'package:chatapp/controllers/signup_controller.dart'; // Import your controller
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
