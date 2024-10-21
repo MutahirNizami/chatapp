@@ -6,7 +6,7 @@ import 'package:chatapp/router/wrapper.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/button.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';

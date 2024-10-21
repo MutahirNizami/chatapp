@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chatapp/router/bottomnavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,12 +28,12 @@ class LoginController extends GetxController {
       );
 
       Get.snackbar("Success", "Login Successful");
-
-      Get.offAll(() => DashboardScreen());
       emailController.clear();
       passwordController.clear();
+      Get.offAll(() => const DashboardScreen());
     } on FirebaseAuthException catch (e) {
       Get.snackbar("Login failed", "Please SignUp you accout");
+      log("$e");
     } finally {
       isLoading(false);
     }
