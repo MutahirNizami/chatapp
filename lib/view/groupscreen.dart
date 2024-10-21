@@ -61,7 +61,7 @@ class _GroupscreenState extends State<Groupscreen> {
                     onPressed: () => showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
-                            contentPadding: EdgeInsets.all(8),
+                            contentPadding: const EdgeInsets.all(8),
                             actions: [
                               TextButton(
                                   onPressed: () {
@@ -181,7 +181,7 @@ class _GroupscreenState extends State<Groupscreen> {
                                     color: Mycolor().subtitlecolor,
                                   ),
                                   // child: const Icon(Icons.person),
-                                  child: Image(
+                                  child: const Image(
                                       image:
                                           AssetImage("assets/images/man.png")),
                                 ),

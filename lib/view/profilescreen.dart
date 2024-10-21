@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:chatapp/router/bottomnavigation.dart';
 import 'package:chatapp/router/wrapper.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -117,11 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const DashboardScreen(),
-                  ));
+              Get.off(() => DashboardScreen());
             },
             icon: Icon(
               Icons.arrow_back_ios_new_rounded,
@@ -166,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               GestureDetector(
                 onTap: _pickImage,
-                child: Stack(alignment: Alignment(1, 1), children: [
+                child: Stack(alignment: const Alignment(1, 1), children: [
                   CircleAvatar(
                     radius: height * 0.07,
                     backgroundImage:

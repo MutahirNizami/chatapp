@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -142,8 +142,8 @@ class _CreateGroupBottomSheetState extends State<CreateGroupBottomSheet> {
       // Create the group in Firestore
       await FirebaseFirestore.instance.collection('groups').add({
         'groupName': _groupNameController.text,
-        'memberIds': selectedUserIds, // This includes the current user
-        'creatorId': currentUserId, // The current user is the admin
+        'memberIds': selectedUserIds,
+        'creatorId': currentUserId,
         'createdAt': FieldValue.serverTimestamp(),
       });
 

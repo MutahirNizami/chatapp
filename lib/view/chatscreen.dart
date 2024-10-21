@@ -199,6 +199,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                   style: TextStyle(color: Mycolor().titlecolor),
+                  onFieldSubmitted: (value) {
+                    _sendMessage(chatId);
+                    _controller.clear();
+                  },
                 ),
               ),
             ],
