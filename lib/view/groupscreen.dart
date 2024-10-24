@@ -6,6 +6,7 @@ import 'package:chatapp/widget/button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -67,11 +68,7 @@ class _GroupscreenState extends State<Groupscreen> {
                             actions: [
                               TextButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const CreateGroupBottomSheet()));
+                                    Get.to(() => CreateGroupBottomSheet());
                                   },
                                   child: Row(
                                       mainAxisAlignment:
@@ -89,7 +86,7 @@ class _GroupscreenState extends State<Groupscreen> {
                               Center(
                                 child: Appbutton(
                                     ontap: () {
-                                      Navigator.pop(context);
+                                      Get.back();
                                     },
                                     text: "Cancel",
                                     btnwidth: width * 0.2,

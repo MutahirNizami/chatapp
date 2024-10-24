@@ -92,6 +92,7 @@
 
 import 'dart:developer';
 import 'dart:io';
+import 'package:chatapp/auth/firebase_notification.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -135,12 +136,41 @@ class ChatController extends GetxController {
     }
   }
 
+  // void sendMessage(String chatId, {String? imageMessage}) async {
+  //   final text = messageController.text.trim();
+
+  //   if (text.isNotEmpty || imageMessage != null) {
+  //     try {
+  //       final senderId = FirebaseAuth.instance.currentUser!.uid;
+  //       await FirebaseFirestore.instance
+  //           .collection("chat")
+  //           .doc(chatId)
+  //           .collection("messages")
+  //           .add({
+  //         "message": text.isNotEmpty ? text : '',
+  //         "image": imageMessage ?? '',
+  //         "senderId": senderId,
+  //         "receiverId": chatId.split('_')[1],
+  //         "timeStamp": FieldValue.serverTimestamp(),
+  //       });
+
+  //       messageController.clear();
+  //       log("Message sent");
+  //     } catch (e) {
+  //       Get.snackbar("Error", "Failed to send message. Please try again.");
+  //     }
+  //   }
+  // }
   void sendMessage(String chatId, {String? imageMessage}) async {
     final text = messageController.text.trim();
 
     if (text.isNotEmpty || imageMessage != null) {
       try {
         final senderId = FirebaseAuth.instance.currentUser!.uid;
+        final receiverId =
+            chatId.split('_')[1]; // Assumes chatId structure is 'user1_user2'
+
+        // Save message in Firestore
         await FirebaseFirestore.instance
             .collection("chat")
             .doc(chatId)
@@ -149,12 +179,16 @@ class ChatController extends GetxController {
           "message": text.isNotEmpty ? text : '',
           "image": imageMessage ?? '',
           "senderId": senderId,
-          "receiverId": chatId.split('_')[1], // Receiver ID logic
+          "receiverId": receiverId,
           "timeStamp": FieldValue.serverTimestamp(),
         });
 
         messageController.clear();
         log("Message sent");
+
+        // Trigger push notification
+        await sendPushNotification(
+            receiverId, text.isNotEmpty ? text : 'Image');
       } catch (e) {
         Get.snackbar("Error", "Failed to send message. Please try again.");
       }

@@ -1,11 +1,12 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'dart:io';
-import 'package:chatapp/router/bottomnavigation.dart';
+
 import 'package:chatapp/router/wrapper.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,7 +25,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
-  bool _haserror = false;
+  final bool _haserror = false;
   String _name = '';
   String _email = '';
 
@@ -120,10 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const DashboardScreen()));
+              Get.back();
             },
             icon: Icon(
               Icons.arrow_back_ios_new_rounded,
@@ -256,10 +254,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _signout() {
     FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const Wrapper(),
-        ));
+    Get.offAll(const Wrapper());
   }
 }
