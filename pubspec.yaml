@@ -47,6 +47,10 @@ dependencies:
   flutter_local_notifications: ^17.2.3
   http: ^1.2.2
   zego_uikit_prebuilt_call: ^4.16.12
+  zego_uikit_signaling_plugin: ^2.8.6
+  zego_express_engine: ^3.17.1
+  animated_splash_screen: ^1.3.0
+ 
 
 dev_dependencies:
   flutter_test:

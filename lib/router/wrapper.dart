@@ -19,9 +19,9 @@ class _WrapperState extends State<Wrapper> {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return LoginScreen();
+              return const LoginScreen();
             } else {
-              return signupScreen();
+              return const signupScreen();
             }
           }),
     );

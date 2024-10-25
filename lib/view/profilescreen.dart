@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:chatapp/router/bottomnavigation.dart';
 import 'package:chatapp/router/wrapper.dart';
 import 'package:chatapp/utilites/colors.dart';
 import 'package:chatapp/widget/button.dart';
@@ -121,7 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
-              Get.back();
+              Get.offAll(() => const DashboardScreen());
             },
             icon: Icon(
               Icons.arrow_back_ios_new_rounded,
